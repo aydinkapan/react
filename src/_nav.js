@@ -8,7 +8,6 @@ import {
   cilDescription,
   cilDrop,
   cilNotes,
-  cilPencil,
   cilPuzzle,
   cilSpeedometer,
   cilStar,
