@@ -15,9 +15,12 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
+import {Link, useParams} from "react-router-dom";
 
 const Tables = () => {
   const [permissions,setPermissions]=useState([]);
+  const {permissionId}=useParams()
+
   useEffect(()=>{
     loadPermissions();
   },[]);
@@ -25,9 +28,12 @@ const Tables = () => {
     const result =await axios.get("http://localhost:8080/permission");
     setPermissions(result.data);
     console.log(result.data);
-
-
   };
+  const deletePermission = async (permissionId) => {
+    await axios.delete(`http://localhost:8080/permission/${permissionId}`);
+    loadPermissions();
+  };
+
 
   return (
     <CRow>
@@ -61,6 +67,17 @@ const Tables = () => {
                         <td>{permission.permissionEndDate}</td>
                         <td>{permission.permissionDefinition}</td>
                         <td>{permission.permissionReturnDate}</td>
+                        <Link
+                          className="btn btn-outline-primary mx-2"
+                          to={`/forms/checks-radios/${permission.permissionId}`}
+                        >
+                          Edit
+                        </Link>
+                        <td>
+                          <button className="btn btn-primary mx-2" onClick={()=>deletePermission(permission.permissionId)}>
+                            Delete
+                          </button>
+                        </td>
                       </tr>))
                   }
                 </CTableBody>

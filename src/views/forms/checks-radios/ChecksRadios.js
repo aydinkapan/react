@@ -1,392 +1,184 @@
-import React from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CFormCheck, CFormSwitch, CRow } from '@coreui/react'
+import React, {useEffect, useState} from 'react'
+
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CForm,
+  CFormCheck,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+} from '@coreui/react'
 import { DocsExample } from 'src/components'
+import {Link, useNavigate, useParams} from "react-router-dom";
+import expense from "../../forms/expense/Expense";
+import axios from "axios";
 
-const ChecksRadios = () => {
-  return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Checkbox</strong>
-          </CCardHeader>
-          <CCardBody>
-            <DocsExample href="forms/checks-radios">
-              <CFormCheck id="flexCheckDefault" label="Default checkbox" />
-              <CFormCheck id="flexCheckChecked" label="Checked checkbox" defaultChecked />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Checkbox</strong> <small>Disabled</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Add the <code>disabled</code> attribute and the associated <code>&lt;label&gt;</code>s
-              are automatically styled to match with a lighter color to help indicate the
-              input&#39;s state.
-            </p>
-            <DocsExample href="forms/checks-radios#disabled">
-              <CFormCheck label="Disabled checkbox" disabled />
-              <CFormCheck label="Disabled checked checkbox" defaultChecked disabled />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Radio</strong>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Add the <code>disabled</code> attribute and the associated <code>&lt;label&gt;</code>s
-              are automatically styled to match with a lighter color to help indicate the
-              input&#39;s state.
-            </p>
-            <DocsExample href="forms/checks-radios#radios">
-              <CFormCheck
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-                label="Default radio"
-              />
-              <CFormCheck
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
-                label="Checked radio"
-                defaultChecked
-              />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Radio</strong> <small>Disabled</small>
-          </CCardHeader>
-          <CCardBody>
-            <DocsExample href="forms/checks-radios#disabled-1">
-              <CFormCheck
-                type="radio"
-                name="flexRadioDisabled"
-                id="flexRadioDisabled"
-                label="Disabled radio"
-                disabled
-              />
-              <CFormCheck
-                type="radio"
-                name="flexRadioDisabled"
-                id="flexRadioCheckedDisabled"
-                label="Disabled checked radio"
-                defaultChecked
-                disabled
-              />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Switches</strong>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              A switch has the markup of a custom checkbox but uses the <code>switch</code> boolean
-              properly to render a toggle switch. Switches also support the <code>disabled</code>{' '}
-              attribute.
-            </p>
-            <DocsExample href="forms/checks-radios#switches">
-              <CFormSwitch label="Default switch checkbox input" id="formSwitchCheckDefault" />
-              <CFormSwitch
-                label="Checked switch checkbox input"
-                id="formSwitchCheckChecked"
-                defaultChecked
-              />
-              <CFormSwitch
-                label="Disabled switch checkbox input"
-                id="formSwitchCheckDisabled"
-                disabled
-              />
-              <CFormSwitch
-                label="Disabled checked switch checkbox input"
-                id="formSwitchCheckCheckedDisabled"
-                defaultChecked
-                disabled
-              />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Switches</strong> <small>Sizes</small>
-          </CCardHeader>
-          <CCardBody>
-            <DocsExample href="forms/checks-radios#sizes">
-              <CFormSwitch label="Default switch checkbox input" id="formSwitchCheckDefault" />
-              <CFormSwitch
-                size="lg"
-                label="Large switch checkbox input"
-                id="formSwitchCheckDefaultLg"
-              />
-              <CFormSwitch
-                size="xl"
-                label="Extra large switch checkbox input"
-                id="formSwitchCheckDefaultXL"
-              />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Checks and Radios</strong> <small>Default layout (stacked)</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              By default, any number of checkboxes and radios that are immediate sibling will be
-              vertically stacked and appropriately spaced.
-            </p>
-            <DocsExample href="forms/checks-radios#default-stacked">
-              <CFormCheck id="defaultCheck1" label="Default checkbox" />
-              <CFormCheck id="defaultCheck2" label="Disabled checkbox" disabled />
-            </DocsExample>
-            <DocsExample href="forms/checks-radios#default-stacked">
-              <CFormCheck
-                type="radio"
-                name="exampleRadios"
-                id="exampleRadios1"
-                value="option1"
-                label="Default radio"
-                defaultChecked
-              />
-              <CFormCheck
-                type="radio"
-                name="exampleRadios"
-                id="exampleRadios2"
-                value="option2"
-                label="Second default radio"
-              />
-              <CFormCheck
-                type="radio"
-                name="exampleRadios"
-                id="exampleRadios3"
-                value="option3"
-                label="Disabled radio"
-                disabled
-              />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Checks and Radios</strong> <small>Inline</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Group checkboxes or radios on the same horizontal row by adding <code>inline</code>{' '}
-              boolean property to any <code>&lt;CFormCheck&gt;</code>.
-            </p>
-            <DocsExample href="forms/checks-radios#inline">
-              <CFormCheck inline id="inlineCheckbox1" value="option1" label="1" />
-              <CFormCheck inline id="inlineCheckbox2" value="option2" label="2" />
-              <CFormCheck
-                inline
-                id="inlineCheckbox3"
-                value="option3"
-                label="3 (disabled)"
-                disabled
-              />
-            </DocsExample>
-            <DocsExample href="forms/checks-radios#inline">
-              <CFormCheck
-                inline
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineCheckbox1"
-                value="option1"
-                label="1"
-              />
-              <CFormCheck
-                inline
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineCheckbox2"
-                value="option2"
-                label="2"
-              />
-              <CFormCheck
-                inline
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineCheckbox3"
-                value="option3"
-                label="3 (disabled)"
-                disabled
-              />
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Checks and Radios</strong> <small>Without labels</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Remember to still provide some form of accessible name for assistive technologies (for
-              instance, using <code>aria-label</code>).
-            </p>
-            <DocsExample href="forms/checks-radios#without-labels">
-              <div>
-                <CFormCheck id="checkboxNoLabel" value="" aria-label="..." />
-              </div>
-              <div>
-                <CFormCheck
-                  type="radio"
-                  name="radioNoLabel"
-                  id="radioNoLabel"
-                  value=""
-                  aria-label="..."
+export default function AddPermission() {
+  let navigate=useNavigate()
+  const {permissionId} = useParams();
+
+
+  const [permission,setPermission]=useState({
+    userId:"",
+    permissionType:"",
+    totalDay:"",
+    permissionStartDate:"",
+    permissionEndDate:"",
+    permissionDefinition:"",
+    permissionReturnDate:""
+  })
+
+  const {userId,permissionType,totalDay,permissionStartDate,permissionEndDate,permissionDefinition,permissionReturnDate} = permission;
+
+  const onInputChange = (e) => {
+    setPermission({...permission,[e.target.name]: e.target.value})
+  };
+  useEffect(()=>{
+    loadPermission();
+  },[])
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.put(`http://localhost:8080/permission/${permissionId}`,permission);
+    navigate("/");
+  };
+  const loadPermission = async () => {
+    const result = await axios.get(`http://localhost:8080/permission/${permissionId}`);
+    setPermission(result.data);
+  }
+  return <div className="container">
+    <div className="row">
+      <div className="col-md-10 offset-md-1 border rounded p-4 mt-2 shadow">
+        <h2 className="text-center m-4">Izin Kayit</h2>
+
+        <form onSubmit={(e) => onSubmit(e)}>
+          <div className="row">
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor = "userId" className="form-label">
+                  User Id
+                </label>
+                <input
+                  type={"number"}
+                  className="form-control"
+                  placeholder="Lutfen User id giriniz"
+                  name="userId"
+                  value={userId}
+                  onChange = {(e) => onInputChange(e)}
                 />
               </div>
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Toggle buttons</strong>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Create button-like checkboxes and radio buttons by using <code>button</code> boolean
-              property on the <code>&lt;CFormCheck&gt;</code> component. These toggle buttons can
-              further be grouped in a button group if needed.
-            </p>
-            <DocsExample href="forms/checks-radios#toggle-buttons">
-              <CFormCheck
-                button={{ color: 'primary ' }}
-                id="btn-check"
-                autoComplete="off"
-                label="Single toggle"
-              />
-            </DocsExample>
-            <DocsExample href="forms/checks-radios#toggle-buttons">
-              <CFormCheck
-                button={{ color: 'primary ' }}
-                id="btn-check-2"
-                autoComplete="off"
-                label="Checked"
-                defaultChecked
-              />
-            </DocsExample>
-            <DocsExample href="forms/checks-radios#toggle-buttons">
-              <CFormCheck
-                button={{ color: 'primary ' }}
-                id="btn-check-3"
-                autoComplete="off"
-                label="Disabled"
-                disabled
-              />
-            </DocsExample>
-            <h3>Radio toggle buttons</h3>
-            <DocsExample href="forms/checks-radios#toggle-buttons">
-              <CFormCheck
-                button={{ color: 'secondary' }}
-                type="radio"
-                name="options"
-                id="option1"
-                autoComplete="off"
-                label="Checked"
-                defaultChecked
-              />
-              <CFormCheck
-                button={{ color: 'secondary' }}
-                type="radio"
-                name="options"
-                id="option2"
-                autoComplete="off"
-                label="Radio"
-              />
-              <CFormCheck
-                button={{ color: 'secondary' }}
-                type="radio"
-                name="options"
-                id="option3"
-                autoComplete="off"
-                label="Radio"
-                disabled
-              />
-              <CFormCheck
-                button={{ color: 'secondary' }}
-                type="radio"
-                name="options"
-                id="option4"
-                autoComplete="off"
-                label="Radio"
-              />
-            </DocsExample>
-            <h3>Outlined styles</h3>
-            <p className="text-medium-emphasis small">
-              Different variants of button, such at the various outlined styles, are supported.
-            </p>
-            <DocsExample href="forms/checks-radios#toggle-buttons">
-              <div>
-                <CFormCheck
-                  button={{ color: 'primary', variant: 'outline' }}
-                  id="btn-check-outlined"
-                  autoComplete="off"
-                  label="Single toggle"
+            </div>
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor = "totalDay" className="form-label">
+                  Total Day
+                </label>
+                <input
+                  type={"number"}
+                  className="form-control"
+                  placeholder="Lutfen Toplam Izin gununu giriniz"
+                  name="totalDay"
+                  value={totalDay}
+                  onChange = {(e) => onInputChange(e)}
                 />
               </div>
-              <div>
-                <CFormCheck
-                  button={{ color: 'secondary', variant: 'outline' }}
-                  id="btn-check-2-outlined"
-                  autoComplete="off"
-                  label="Checked"
-                  defaultChecked
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor = "startDate" className="form-label">
+                  Izin Baslama Tarihi
+                </label>
+                <input
+                  type={"date"}
+                  className="form-control"
+                  placeholder="Lutfen Izin Baslama Tarihini Giriniz"
+                  name="permissionStartDate"
+                  value={permissionStartDate}
+                  onChange = {(e) => onInputChange(e)}
                 />
               </div>
-              <div>
-                <CFormCheck
-                  button={{ color: 'success', variant: 'outline' }}
-                  type="radio"
-                  name="options-outlined"
-                  id="success-outlined"
-                  autoComplete="off"
-                  label="Radio"
-                  defaultChecked
-                />
-                <CFormCheck
-                  button={{ color: 'danger', variant: 'outline' }}
-                  type="radio"
-                  name="options-outlined"
-                  id="danger-outlined"
-                  autoComplete="off"
-                  label="Radio"
+            </div>
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor = "endDate" className="form-label">
+                  Izin Bitis Tarihi
+                </label>
+                <input
+                  type={"date"}
+                  className="form-control"
+                  placeholder="Lutfen Izin Bitis Tarihini Giriniz"
+                  name="permissionEndDate"
+                  value={permissionEndDate}
+                  onChange = {(e) => onInputChange(e)}
                 />
               </div>
-            </DocsExample>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
-  )
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor = "izin" className="form-label">
+                  Izin Tipi
+                </label>
+                <CFormSelect aria-label="Default select example" type={"text"}
+                             className="form-control"
+                             placeholder="Lutfen izin tipi giriniz"
+                             name="permissionType"
+                             value={permissionType}
+                             onChange = {(e) => onInputChange(e)}>
+                  <option>Lutfen izin tipi seciniz</option>
+                  <option value="Illness">Illness</option>
+                  <option value="Death">Death</option>
+                  <option value="Marriage">Marriage</option>
+                  <option value="Unpaid_Vacation">Unpaid_Vacation</option>
+                  <option value="Other">Other</option>
+
+                </CFormSelect>
+              </div>
+            </div>
+            <div className="col">
+              <div className="mb-3">
+                <label htmlFor = "startDate" className="form-label">
+                  Izin Bitis Tarihi
+                </label>
+                <input
+                  type={"date"}
+                  className="form-control"
+                  placeholder="Lutfen Donus Tarihini Giriniz"
+                  name="permissionReturnDate"
+                  value={permissionReturnDate}
+                  onChange = {(e) => onInputChange(e)}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="mb-3">
+            <label htmlFor = "permissionDefinition" className="form-label">
+              Izin Aciklamasi
+            </label>
+            <input
+              type={"text"}
+              className="form-control"
+              placeholder="Lutfen Izin Aciklamasi Giriniz"
+              name="permissionDefinition"
+              value={permissionDefinition}
+              onChange = {(e) => onInputChange(e)}
+            />
+
+          </div>
+          <div className="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" className="btn btn-outline-primary" color="primary">SAVE</button>
+          </div>        </form>
+      </div>
+    </div>
+  </div>
 }
-
-export default ChecksRadios

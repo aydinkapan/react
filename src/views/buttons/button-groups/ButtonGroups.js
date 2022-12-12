@@ -19,7 +19,7 @@ import {Link, useParams} from "react-router-dom";
 
 const Tables = () => {
   const [expenses,setExpenses]=useState([]);
-  const {spendId}=useParams()
+  const {spendingId}=useParams()
   useEffect(()=>{
     loadExpenses();
   },[]);
@@ -28,8 +28,8 @@ const Tables = () => {
     setExpenses(result.data);
     console.log(result.data);
   };
-  const deleteExpense = async (spendId) => {
-    await axios.delete(`http://localhost:8080/spending/${spendId}`);
+  const deleteExpense = async (spendingId) => {
+    await axios.delete(`http://localhost:8080/spending/${spendingId}`);
     loadExpenses();
   };
   return (
@@ -64,12 +64,12 @@ const Tables = () => {
                         <td>{expense.spendingDefinition}</td>
                         <Link
                           className="btn btn-outline-primary mx-2"
-                          to={`/buttons/buttons/${expense.spendId}`}
+                          to={`/buttons/dropdowns/${expense.spendingId}`}
                         >
                           Edit
                         </Link>
                         <td>
-                          <button className="btn btn-primary mx-2" onClick={()=>deleteExpense(expense.spendId)}>
+                          <button className="btn btn-primary mx-2" onClick={()=>deleteExpense(expense.spendingId)}>
                             Delete
                           </button>
                         </td>
